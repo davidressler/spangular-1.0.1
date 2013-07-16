@@ -80,8 +80,11 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope) {
 
     $scope.params = Search.getSearch();
 
-	$scope.updateModel = function () {
+	$scope.updateModel = function (config) {
 		var url = $state.href($state.current.name, $scope.params);
+		if('stopRefresh' in config && config['stopRefresh'] === true ) {
+			$rootScope.allowRefresh = false;
+		}
 		$location.url(url);
 	};
 
@@ -92,8 +95,7 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope) {
 			$scope.params.lat = mapModel.center.lat();
 			Search.setSearch($scope.params);
 
-			$rootScope.isMapping = true;
-			$scope.updateModel();
+			$scope.updateModel({stopRefresh: true});
 		}
 	};
 
@@ -137,7 +139,7 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope) {
 
 	$scope.filter = function () {
         Search.setSearch($scope.params);
-        $scope.updateModel();
+        $scope.updateModel({stopRefresh:true});
     };
 
 	$scope.$on('updateSearch', function(){

@@ -5,17 +5,12 @@ var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Mod
 app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search){
 	$rootScope.$state = $state;
 	$rootScope.$stateParams = $stateParams;
-    $rootScope.isMapping = false;
+    $rootScope.allowRefresh = true;
     $rootScope.$on('$stateChangeStart', function(ev) {
-        if($rootScope.isMapping){
+        if(!$rootScope.allowRefresh){
 	        ev.preventDefault();
-            $rootScope.isMapping = false;
+            $rootScope.allowRefresh = true;
         }
-
-        console.log($location.url());
-        $timeout(function(){
-//            console.log('AND THIS: ', $state.href($state.current.name));
-        }, 20);
 
     });
 	$rootScope.$on('$stateChangeSuccess', function(ev){
@@ -39,7 +34,9 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search){
 	});
 });
 
-app.config(function($stateProvider, $urlRouterProvider, SearchProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+
+	$locationProvider.html5Mode(true).hashPrefix('!');
 
 	var paramList = '?beds&lat&lon&zoom';
 
@@ -53,33 +50,32 @@ app.config(function($stateProvider, $urlRouterProvider, SearchProvider) {
         .state('search', {
 	        abstract: true,
 		    url: '/search',
-            templateUrl: 'static/views/search.html',
+            templateUrl: '/static/views/search.html',
 		    controller: 'SearchCtrl'
          })
 	        .state('search.list', {
 	            url: '/list' + paramList,
-	            templateUrl: 'static/views/search-list.html'
+	            templateUrl: '/static/views/search-list.html'
 	         })
 	        .state('search.map', {
 	            url: '/map' + paramList,
-	            templateUrl: 'static/views/search-map.html'
+	            templateUrl: '/static/views/search-map.html'
 	        })
 	    .state('search.listing', {
 		    url: '/listing/:id' + paramList,
-		    templateUrl: 'static/views/search-listing.html'
+		    templateUrl: '/static/views/search-listing.html'
 	    })
         .state('favorites', {
             url: '/favorites',
-            templateUrl: 'static/views/favorites.html'
-        })
-
+            templateUrl: '/static/views/favorites.html'
+        });
 });
 
 app.directive('listView', function() {
 	return {
 		restrict: 'EA',
 //		scope: {},
-		templateUrl: 'static/views/list-view.html',
+		templateUrl: '/static/views/list-view.html',
 		link: function(scope, element, attrs){
 //			console.log(scope);
 		}
@@ -102,7 +98,7 @@ listings.factory('Listings', function($http) {
 app.directive('filter', function($stateParams) {
     return {
         restrict: 'EA',
-        templateUrl: 'static/views/search-filter.html',
+        templateUrl: '/static/views/search-filter.html',
         scope: {},
 	    transclude: true,
 	    controller: 'SearchCtrl',
@@ -124,7 +120,7 @@ app.directive('filter', function($stateParams) {
 app.directive('listingCell', function(){
 	return {
 		restrict: 'E',
-		templateUrl: 'static/views/listing-cell.html',
+		templateUrl: '/static/views/listing-cell.html',
 		scope:{
 			listing: '='
 		},
