@@ -1,0 +1,13 @@
+<table class="listing" ng-click="showListing(listing.id)">
+    <tr>
+        <td style="width: 160px" rowspan="3"><img ng-src="http://d2vzw4mx84c4xs.cloudfront.net/chafe/7/{{ listing.Photos[0] }}.jpg"/></td>
+        <td style="width: 150px"><strong>{{ listing.Price | currency }}</strong></td>
+        <td style="width: 150px" rowspan="3"><a class="btn btn-danger" href="">View Details</a></td>
+    </tr>
+    <tr>
+        <td style="width: 150px">{{ listing.Address }}</td>
+    </tr>
+    <tr>
+        <td style="width: 150px">{{ listing.Beds }} bd / {{ listing.Baths }} ba</td>
+    </tr>
+</table>

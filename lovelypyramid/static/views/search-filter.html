@@ -1,0 +1,11 @@
+<table class="filter">
+    <tr>
+        <td>Zoom Level:</td>
+        <td>{{ params.zoom }}</td>
+        <td>Beds:</td>
+        <td><input type="text" ng-model="params.beds"/></td>
+        <td><a ng-class="{'active': $state.includes('search.map'), ' btn btn-primary': true}" href="#/search/map">Map</a></td>
+        <td><a ng-class="{'active': $state.includes('search.list'), 'btn btn-success': true}" href="#/search/list">List</a></td>
+    </tr>
+</table>
+<div ng-transclude></div>

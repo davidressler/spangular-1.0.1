@@ -1,4 +1,4 @@
-from lovelypyramid.route import map_routes
+
 
 def example_json(request):
 
