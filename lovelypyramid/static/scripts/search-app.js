@@ -1,6 +1,6 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.provider('Search', function() {
+searchModule.factory('Search', function($http) {
     var defaultZoom = 12,
         defaultBeds = 3,
         defaultLat = 37,
@@ -10,7 +10,8 @@ searchModule.provider('Search', function() {
             lat: defaultLat,
             lon: defaultLon,
             zoom: defaultZoom
-        };
+        },
+	    madeRequest = false;
 
     var requiredParams = {
         'zoom': true,
@@ -19,20 +20,53 @@ searchModule.provider('Search', function() {
     };
 
     this.getSearch = function() {
-        var nulledVals = false,
-            smartSearch = searchObj;
+	    console.log("GET SEARCH");
+	    var that = this;
+	    var search = {};
+	    //Is there a search object stored on the server?
+	    console.log('checking request');
+		if(!madeRequest){
+			console.log('never made request');
+			return $http.get('/get/search').then(function(data){
+				searchObj = data;
+				madeRequest = true;
+				return data;
 
-        for (var key in searchObj) {
-            if ( ( !( key in requiredParams ) ) && ( ( searchObj[key].toString() == 'NaN') || searchObj[key] === null ) ) {
-                nulledVals = true;
-                delete smartSearch[key];
-            }
-        }
+			});
 
-        if (nulledVals) {
-            return smartSearch;
-        }
-        return searchObj;
+		} else {
+			console.log('else')
+		}
+
+
+	    var ReturnSearch = function() {
+		    console.log('in return function');
+		    //If all else fails
+		    if (!that.isValid(search)) {
+			    console.log('search isnt valid; updating to defaults');
+			    search = searchObj;
+		    } else {
+			    console.log('search is valid! new shit');
+			    searchObj = search;
+		    }
+
+		    // Filter out non-required null values
+		    var nulledVals = false,
+			    smartSearch = search;
+
+		    for (var key in searchObj) {
+			    if (( !( key in requiredParams ) ) && ( ( searchObj[key].toString() == 'NaN') || searchObj[key] === null || searchObj[key] == '')) {
+				    nulledVals = true;
+				    delete smartSearch[key];
+			    }
+		    }
+
+		    if (nulledVals) {
+			    return smartSearch;
+		    }
+		    return searchObj;
+	    };
+
     };
 
 	this.isValid = function(search){
@@ -66,17 +100,15 @@ searchModule.provider('Search', function() {
         return searchObj;
     };
 
-    this.$get = function() {
-        return {
-            getSearch: this.getSearch,
-	        isValid: this.isValid,
-	        resolveSearch: this.resolveSearch,
-            setSearch: this.setSearch
-        }
+    return {
+        getSearch: this.getSearch,
+        isValid: this.isValid,
+        resolveSearch: this.resolveSearch,
+        setSearch: this.setSearch
     }
 });
 
-function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope) {
+function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $http) {
 
     $scope.params = Search.getSearch();
 

@@ -1,4 +1,4 @@
-
+from spot.model.user.usersearch import UserSearch
 
 def example_json(request):
 
@@ -31,3 +31,14 @@ def spangular3(request):
 
 	c = dict()
 	return {'c': c}
+
+def search(request):
+
+	result = dict()
+	result['beds'] = 2
+	result['lat'] = 33
+	result['lon'] = -127
+	result['zoom'] = 15
+
+
+	return result
