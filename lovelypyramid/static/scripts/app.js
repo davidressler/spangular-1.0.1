@@ -1,10 +1,11 @@
 'use strict';
 
-var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'Search-State-Mgr']);
+var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'Search-State-Mgr', 'ngCookies']);
 
 app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, SearchStateMgr){
 	$rootScope.$state = $state;
 	$rootScope.$stateParams = $stateParams;
+    $rootScope.Search = Search;
     $rootScope.allowRefresh = true;
     $rootScope.$on('$stateChangeStart', function(ev) {
         if(!$rootScope.allowRefresh){
@@ -14,38 +15,14 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
 
     });
 
-	$rootScope.changeUrl = function () {
-		// Set search from url; method will ignore invalid parameters
-		// stateParams is the App's source of truth
-		Search.setSearch($stateParams);
-
-		// Does our url match our model?
-		console.log('calling resolve');
-		if (!Search.resolveSearch($stateParams)) {
-			//If not, which wins - url or search?
-
-			// Is the url a valid search?
-			// If not, navigate to new url based on our model
-			if (!Search.isValid($stateParams)) {
-				$location.url($state.href($state.current.name, Search.getSearch('CHANGE URL'))).replace();
-				// If so, let errbody know the search model has been updated
-			} else {
-				$rootScope.$broadcast('updateSearch');
-			}
-		}
-	};
-
 	$rootScope.$on('$stateChangeSuccess', function(ev){
-//		$rootScope.changeUrl();
         console.log('STATE CHANGE')
-        $rootScope.$broadcast('FUCK!!');
         SearchStateMgr.URLUpdated($stateParams);
 	});
 
-    $rootScope.updateSearchFactory = function(search) {
-        console.log('THIS IS UPDATE SF ON ROOT SCOPE: ', search);
-    };
-
+    $rootScope.returnedServerSearch = function(search) {
+        SearchStateMgr.factoryModelUpdated(search);
+    }
 });
 
 

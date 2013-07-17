@@ -42,5 +42,11 @@ def search(request):
 	result['lon'] = -127
 	result['zoom'] = 15
 
-
 	return result
+
+def saveSearch(request):
+	return {'success': True}
+
+def testing(request):
+	c = dict()
+	return {'c': c}

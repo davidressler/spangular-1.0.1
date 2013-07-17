@@ -10,10 +10,17 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         zoom: 12
     };
 
+    var requiredParams = {
+        'zoom': true,
+        'lat': true,
+        'lon': true
+    };
+
 
     // Listeners
     //////////////
-    $rootScope.$on('SearchCtrlReady!!', function () {
+    $rootScope.$on('SearchCtrlReady', function () {
+        console.log('about to update view model');
         updateViewModel();
     });
 
@@ -28,7 +35,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
 
     var updateFactoryModel = function () {
         console.log('update factory')
-        $rootScope.updateSearchFactory(searchObj);
+        $rootScope.Search.saveSearch(searchObj);
     };
 
     var updateViewModel = function () {
@@ -36,26 +43,65 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         $rootScope.$broadcast('SearchUpdated', searchObj);
     };
 
+    var validSearch = function (search) {
+        var valid = true;
+        for (var param in requiredParams) {
+            if (!(param in search) || search[param] === null || search[param].toString() === 'NaN') {
+                valid = false;
+            }
+        }
+        return valid;
+    };
+
+    var setSearch = function(search) {
+        if (validSearch(search)) {
+            for (var key in search) {
+                search[key] = parseFloat(search[key]);
+            }
+            searchObj = search;
+            return true;
+        }
+        return false;
+    };
+
+    var syncSearchModel = function() {
+        updateUrl();
+        updateFactoryModel();
+        updateViewModel();
+        $rootScope.Search.saveSearch(searchObj);
+    }
+
 
     // Public
     //////////////
     var URLUpdated = function(search) {
         console.log('URL Updated: ', search);
-        searchObj = search;
-        updateFactoryModel();
-        updateViewModel();
+        if ( setSearch(search) ) {
+            updateFactoryModel();
+            updateViewModel();
+        } else {
+            console.log('SEARCH NO VALID', search);
+            var result = $rootScope.Search.getSearch();
+            if (result === null) {
+                syncSearchModel();
+            } else {
+                searchObj = result;
+                updateUrl();
+                updateViewModel();
+            }
+        }
     };
 
     var factoryModelUpdated = function(search) {
         console.log('Factory Updated: ', search);
-        searchObj = search;
+        setSearch(search);
         updateUrl();
         updateViewModel();
     };
 
     var viewModelUpdated = function (search) {
         console.log('VM Updated: ', search);
-        searchObj = search;
+        setSearch(search);
         updateUrl();
         updateFactoryModel();
     };
