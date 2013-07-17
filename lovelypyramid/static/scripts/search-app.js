@@ -1,6 +1,6 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.factory('Search', function($http, $rootScope) {
+searchModule.factory('Search', function($http, $rootScope, SearchStateMgr) {
     var defaultZoom = 12,
         defaultBeds = 3,
         defaultLat = 37,
@@ -19,15 +19,19 @@ searchModule.factory('Search', function($http, $rootScope) {
         'lon': true
     };
 
-    this.getSearch = function() {
+    this.getSearch = function(from) {
 	    console.log("GET SEARCH");
+        console.log('FROM:', from);
 	    var that = this;
 	    var search = {};
 	    //Is there a search object stored on the server?
 		if(!madeRequest){
+            console.log('request heyyyy');
 			return $http.get('/get/search').then(function(data){
-				searchObj = data.data;
+				that.setSearch(data.data);
+                console.log(searchObj);
 				madeRequest = true;
+                console.log('returning');
 				return searchObj;
 
 			});
@@ -106,16 +110,19 @@ searchModule.factory('Search', function($http, $rootScope) {
     }
 });
 
-function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $http) {
+searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, SearchStateMgr, Listings, $state, $location) {
 
-    $scope.params = Search.getSearch();
+    $scope.params = {zoom: 13, lat: 40, lon: -150, beds: 2};
+
+    $scope.$emit('SearchCtrlReady!!!');
 
 	$scope.updateModel = function (config) {
-		var url = $state.href($state.current.name, $scope.params);
-		if('stopRefresh' in config && config['stopRefresh'] === true ) {
-			$rootScope.allowRefresh = false;
-		}
-		$location.url(url);
+//		var url = $state.href($state.current.name, $scope.params);
+//		if('stopRefresh' in config && config['stopRefresh'] === true ) {
+//			$rootScope.allowRefresh = false;
+//		}
+//		$location.url(url);
+        SearchStateMgr.viewModelUpdated($scope.params);
 	};
 
 	$scope.updateMap = function(mapModel, zoom_changed) {
@@ -128,9 +135,6 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 			$scope.updateModel({stopRefresh: true});
 		}
 	};
-
-	console.log($scope.params.lat);
-	console.log($scope.params.lon);
 
     angular.extend($scope, {
         center: {
@@ -171,20 +175,14 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 	});
 
 	$scope.filter = function () {
-        Search.setSearch($scope.params);
         $scope.updateModel({stopRefresh:true});
     };
 
-	$scope.$on('updateSearch', function(){
-		$scope.params = Search.getSearch();
-	});
+    $scope.$on('SearchUpdated', function(evt, args) {
+        console.log('1212121212', args);
+    });
 
-	$scope.$watch('$scope.params', function(){
-		$rootScope.changeUrl();
-	}, true);
-
-};
-searchModule.$inject = ['$scope', '$state', '$stateParams', '$location', 'Search', 'Listings', '$rootScope'];
+});
 
 searchModule.filter('searchFilter', function($stateParams) {
 
