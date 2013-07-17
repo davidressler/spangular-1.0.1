@@ -34,6 +34,8 @@ def spangular3(request):
 
 def search(request):
 
+	print 'making request'
+
 	result = dict()
 	result['beds'] = 2
 	result['lat'] = 33
