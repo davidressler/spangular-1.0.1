@@ -1,6 +1,6 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.factory('Search', function($http) {
+searchModule.factory('Search', function($http, $rootScope) {
     var defaultZoom = 12,
         defaultBeds = 3,
         defaultLat = 37,
@@ -24,18 +24,16 @@ searchModule.factory('Search', function($http) {
 	    var that = this;
 	    var search = {};
 	    //Is there a search object stored on the server?
-	    console.log('checking request');
 		if(!madeRequest){
-			console.log('never made request');
 			return $http.get('/get/search').then(function(data){
-				searchObj = data;
+				searchObj = data.data;
 				madeRequest = true;
-				return data;
+				return searchObj;
 
 			});
 
 		} else {
-			console.log('else')
+			return searchObj;
 		}
 
 
@@ -131,6 +129,9 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 		}
 	};
 
+	console.log($scope.params.lat);
+	console.log($scope.params.lon);
+
     angular.extend($scope, {
         center: {
             latitude: $scope.params.lat, // initial map center latitude
@@ -177,6 +178,10 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 	$scope.$on('updateSearch', function(){
 		$scope.params = Search.getSearch();
 	});
+
+	$scope.$watch('$scope.params', function(){
+		$rootScope.changeUrl();
+	}, true);
 
 };
 searchModule.$inject = ['$scope', '$state', '$stateParams', '$location', 'Search', 'Listings', '$rootScope'];

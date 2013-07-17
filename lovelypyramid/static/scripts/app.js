@@ -13,26 +13,34 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search){
         }
 
     });
-	$rootScope.$on('$stateChangeSuccess', function(ev){
+
+	$rootScope.changeUrl = function () {
 		// Set search from url; method will ignore invalid parameters
-        // stateParams is the App's source of truth
+		// stateParams is the App's source of truth
 		Search.setSearch($stateParams);
 
 		// Does our url match our model?
-		if(!Search.resolveSearch($stateParams)){
+		console.log('calling resolve');
+		if (!Search.resolveSearch($stateParams)) {
 			//If not, which wins - url or search?
 
 			// Is the url a valid search?
 			// If not, navigate to new url based on our model
-			if(!Search.isValid($stateParams)){
+			if (!Search.isValid($stateParams)) {
 				$location.url($state.href($state.current.name, Search.getSearch())).replace();
-			// If so, let errbody know the search model has been updated
-			}else {
+				// If so, let errbody know the search model has been updated
+			} else {
 				$rootScope.$broadcast('updateSearch');
 			}
 		}
+	};
+
+	$rootScope.$on('$stateChangeSuccess', function(ev){
+		$rootScope.changeUrl();
 	});
+
 });
+
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
