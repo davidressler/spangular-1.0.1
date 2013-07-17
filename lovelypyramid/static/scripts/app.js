@@ -8,6 +8,9 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
     $rootScope.Search = Search;
     $rootScope.allowRefresh = true;
     $rootScope.$on('$stateChangeStart', function(ev) {
+
+        console.log($rootScope.allowRefresh, $stateParams);
+
         if(!$rootScope.allowRefresh){
 	        ev.preventDefault();
             $rootScope.allowRefresh = true;
@@ -16,11 +19,13 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
     });
 
 	$rootScope.$on('$stateChangeSuccess', function(ev){
-        console.log('STATE CHANGE')
-        SearchStateMgr.URLUpdated($stateParams);
+        if ($state.includes('search.map') || $state.includes('search.list')) {
+            SearchStateMgr.URLUpdated($stateParams);
+        }
 	});
 
     $rootScope.returnedServerSearch = function(search) {
+        console.log('Returned Server Search');
         SearchStateMgr.factoryModelUpdated(search);
     }
 });

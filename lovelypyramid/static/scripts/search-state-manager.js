@@ -20,7 +20,6 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     // Listeners
     //////////////
     $rootScope.$on('SearchCtrlReady', function () {
-        console.log('about to update view model');
         updateViewModel();
     });
 
@@ -28,18 +27,18 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     // Private
     //////////////
     var updateUrl = function () {
-        console.log('update url');
+        console.log('updateURL is called', searchObj);
         $rootScope.allowRefresh = false;
+        console.log('location', $location);
         $location.url($state.href($state.current.name, searchObj));
     };
 
     var updateFactoryModel = function () {
-        console.log('update factory')
         $rootScope.Search.saveSearch(searchObj);
     };
 
     var updateViewModel = function () {
-        console.log('about to BC');
+        console.log('updateVM is called', searchObj);
         $rootScope.$broadcast('SearchUpdated', searchObj);
     };
 
@@ -75,14 +74,13 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     // Public
     //////////////
     var URLUpdated = function(search) {
-        console.log('URL Updated: ', search);
         if ( setSearch(search) ) {
             updateFactoryModel();
             updateViewModel();
         } else {
-            console.log('SEARCH NO VALID', search);
             var result = $rootScope.Search.getSearch();
-            if (result === null) {
+            console.log('GSR:', result);
+            if (result == null) {
                 syncSearchModel();
             } else {
                 searchObj = result;
@@ -93,14 +91,13 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     };
 
     var factoryModelUpdated = function(search) {
-        console.log('Factory Updated: ', search);
+        console.log('Factory Model Updated with: ', search)
         setSearch(search);
         updateUrl();
         updateViewModel();
     };
 
     var viewModelUpdated = function (search) {
-        console.log('VM Updated: ', search);
         setSearch(search);
         updateUrl();
         updateFactoryModel();

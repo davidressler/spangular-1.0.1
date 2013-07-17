@@ -3,57 +3,41 @@ var searchModule = angular.module('Search-Module', []);
 searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse) {
     this.saveSearch = function(search) {
         $http.post('/save/search', search).success(function(data) {
-            console.log('SAVED: ', data)
+            console.log('SUCCESSFULLY SAVED: ', search);
             $cookieStore.put('search', search);
         });
     };
 
     this.getSearch = function() {
         var that = this;
-//        var search = $cookieStore.get('search');
-
-        var search = undefined;
+        var search = $cookieStore.get('search');
 
         if (search != undefined) {
-            console.log('in cookie: ', search);
             return search;
         } else {
-            console.log('WORKER')
             var worker = new Worker('/static/scripts/workers/getSearch.js');
 
             worker.addEventListener("message", function (data) {
                 var parsedData = $.parseJSON(data.data);
-                $rootScope.returnedServerSearch(parsedData);
-                $cookieStore.put('search', parsedData);
+                if ('failed' in parsedData) {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (pos) {
+                            search = {
+                                beds: null,
+                                lat: pos.coords.latitude,
+                                lon: pos.coords.longitude,
+                                zoom: 15
+                            }
+                            console.log('about to RET SERVER SRCH from GEO LOCATION');
+                            that.saveSearch(search);
+                            $rootScope.returnedServerSearch(search);
+                        });
+                    }
+                } else {
+                    $rootScope.returnedServerSearch(parsedData);
+                    $cookieStore.put('search', parsedData);
+                }
             }, false);
-
-
-
-//            $http.get('/get/search')
-//                .success(function(data) {
-//                    console.log('in success: ', data);
-//                    $cookieStore.put('search', data);
-//                    return data;
-//                })
-//                .error(function() {
-//                    console.log('in error: ');
-//                    if (navigator.geolocation) {
-//                        navigator.geolocation.getCurrentPosition(function (pos) {
-//                            search = {
-//                                beds: null,
-//                                lat: pos.coords.latitude,
-//                                lon: pos.coords.longitude,
-//                                zoom: 15
-//                            }
-//
-//                            that.saveSearch(search);
-//
-//                            return search;
-//                        });
-//                    }
-//                });
-//
-//            return null;
         }
 
     };
@@ -68,35 +52,52 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
     $timeout(function () {
         $scope.$emit('SearchCtrlReady');
-
     }, 0);
 
-    $scope.params = { beds: 3, lat: 40, lon: -150, zoom: 12 };
 
-	$scope.updateModel = function (config) {
+    $scope.params = { beds: 3, lat: 40, lon: -150, zoom: 19 };
+
+	$scope.updateModel = function () {
 //		var url = $state.href($state.current.name, $scope.params);
 //		if('stopRefresh' in config && config['stopRefresh'] === true ) {
 //			$rootScope.allowRefresh = false;
 //		}
 //		$location.url(url);
+        console.log('ViewModel is about to update:', $scope.params);
         SearchStateMgr.viewModelUpdated($scope.params);
 	};
 
-	$scope.updateMap = function(mapModel, zoom_changed) {
+	$scope.syncSearchWithMap = function(mapModel, zoom_changed) {
 		if (zoom_changed || $scope.params.zoom != mapModel.zoom || $scope.params.lon != mapModel.center.lng() || $scope.params.lat != mapModel.center.lat()) {
-			$scope.params.zoom = mapModel.zoom;
-			$scope.params.lon = mapModel.center.lng();
-			$scope.params.lat = mapModel.center.lat();
+            $scope.params.zoom = mapModel.zoom;
+            console.log('ZOOM ==', $scope.params.zoom);
+            $scope.params.lon = mapModel.center.lng();
+            console.log('LONG ==', $scope.params.lon);
+            $scope.params.lat = mapModel.center.lat();
+            console.log('LAT ==', $scope.params.lat);
 
-			$scope.updateModel({stopRefresh: true});
+            console.log('All together now... ==', $scope.params);
+
+            $scope.updateModel();
 		}
 	};
+
+    $scope.syncMapWithSearch = function() {
+        if($scope.params != undefined) {
+            $scope.center = {
+                latitude: $scope.params.lat,
+                longitude: $scope.params.lon
+            };
+            $scope.zoom = $scope.params.zoom;
+        }
+    }
 
     angular.extend($scope, {
         center: {
             latitude: $scope.params.lat, // initial map center latitude
             longitude: $scope.params.lon // initial map center longitude
         },
+        zoom: $scope.params.zoom,
 	    options: {
 			mapTypeControl: false,
 		    streetViewControl: false,
@@ -111,7 +112,7 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 //                }
             },
             idle: function (mapModel) {
-	            $scope.updateMap(mapModel);
+	            $scope.syncSearchWithMap(mapModel);
 
             },
 	        dragstart: function(mapModel) {
@@ -121,7 +122,7 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
             },
 	        zoom_changed: function(mapModel) {
-		        $scope.updateMap(mapModel, true);
+		        $scope.syncMapWithSearch(mapModel, true);
 	        }
         }
     });
@@ -136,9 +137,12 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
     $scope.$on('SearchUpdated', function(evt, args) {
         $scope.params = args;
+        $scope.syncMapWithSearch();
     });
 
     $scope.setView = function(name) {
+        console.log('SETVIEW', $scope.params);
+
         if (name === 'list') {
             var url = $state.href('search.list', $scope.params);
             $location.url(url);

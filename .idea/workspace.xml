@@ -4,7 +4,7 @@
     <list default="true" id="7b64d545-dd69-4972-8fce-40ff5c6a9df5" name="Default" comment="" />
     <ignored path="LovelyPyramid.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/example.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098445068" ignored="false" />
+    <file path="/example.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374104128245" ignored="false" />
     <file path="/route.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098322585" ignored="false" />
     <file path="/example.jinja2.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1373999559297" ignored="false" />
     <file path="/__init__.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374000167772" ignored="false" />
@@ -30,16 +30,17 @@
     <file path="$PROJECT_DIR$/lovelypyramid/static/bower_components/angular-ui/modules/directives/calendar/calendar.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374013793230" ignored="false" />
     <file path="$PROJECT_DIR$/lovelypyramid/static/bower_components/angular-ui/test/lib/codemirror/codemirror.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374013783583" ignored="false" />
     <file path="$PROJECT_DIR$/lovelypyramid/static/bower_components/angular-ui/build/angular-ui.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374013793230" ignored="false" />
-    <file path="/app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098779550" ignored="false" />
+    <file path="/app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374104690746" ignored="false" />
     <file path="/search-filter.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374088690114" ignored="false" />
-    <file path="/search-app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374099256253" ignored="false" />
+    <file path="/search-app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374104020340" ignored="false" />
     <file path="/a.dummy" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374017448583" ignored="false" />
     <file path="/Python Console" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018163856" ignored="false" />
     <file path="/search.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018144744" ignored="false" />
-    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374095702887" ignored="false" />
+    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374104814775" ignored="false" />
     <file path="/*.regexp" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374087842875" ignored="false" />
     <file path="/getSearch.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098506381" ignored="false" />
     <file path="/testing.jinja2" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098421559" ignored="false" />
+    <file path="/search-map.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374101375713" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,43 +63,43 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="51" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
+            <state line="30" column="3" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search-app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="search-app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="55" selection-start="979" selection-end="979" vertical-scroll-proportion="0.5006418">
+            <state line="36" column="38" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jinja2" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lovelypyramid/templates/index.jinja2">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1137" selection-end="1137" vertical-scroll-proportion="-18.125">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="getSearch.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/workers/getSearch.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="35" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search-state-manager.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="search-state-manager.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="21" selection-start="1634" selection-end="1634" vertical-scroll-proportion="0.0">
+            <state line="83" column="34" selection-start="2165" selection-end="2165" vertical-scroll-proportion="0.41206676">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lovelypyramid/views/search.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="20" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="example.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="43" column="5" selection-start="571" selection-end="571" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -121,14 +122,15 @@
         <option value="$PROJECT_DIR$/lovelypyramid/model/search.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/views/search.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html" />
-        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/route.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/templates/testing.jinja2" />
-        <option value="$PROJECT_DIR$/lovelypyramid/views/example.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/workers/getSearch.js" />
-        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/app.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/templates/index.jinja2" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/views/search-map.html" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js" />
+        <option value="$PROJECT_DIR$/lovelypyramid/views/example.py" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/app.js" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js" />
       </list>
     </option>
   </component>
@@ -264,6 +266,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LovelyPyramid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spangular-1.0.1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lovelypyramid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -577,25 +601,9 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/templates/example.jinja2">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="82" selection-end="82" vertical-scroll-proportion="-5.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="20" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -633,9 +641,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/route.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="24" selection-start="338" selection-end="338" vertical-scroll-proportion="0.44159177">
+        <state line="11" column="118" selection-start="868" selection-end="868" vertical-scroll-proportion="0.21181001">
           <folding />
         </state>
       </provider>
@@ -647,44 +655,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/route.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="118" selection-start="868" selection-end="868" vertical-scroll-proportion="0.21181001">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="51" selection-start="823" selection-end="823" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="21" selection-start="1634" selection-end="1634" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/workers/getSearch.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="35" selection-start="732" selection-end="732" vertical-scroll-proportion="0.0">
+        <state line="26" column="35" selection-start="732" selection-end="732" vertical-scroll-proportion="0.5006418">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/templates/index.jinja2">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1137" selection-end="1137" vertical-scroll-proportion="-18.125">
+        <state line="34" column="0" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.57615894">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="5" selection-start="571" selection-end="571" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="22" selection-start="173" selection-end="173" vertical-scroll-proportion="0.09933775">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="20" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="3" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="55" selection-start="979" selection-end="979" vertical-scroll-proportion="0.5006418">
+        <state line="36" column="38" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="34" selection-start="2165" selection-end="2165" vertical-scroll-proportion="0.41206676">
           <folding />
         </state>
       </provider>

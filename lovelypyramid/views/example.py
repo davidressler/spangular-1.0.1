@@ -36,11 +36,12 @@ def search(request):
 
 	print 'making request'
 
-	result = dict()
+	result = {}
 	result['beds'] = 2
 	result['lat'] = 33
 	result['lon'] = -127
 	result['zoom'] = 15
+	#result['failed'] = True
 
 	return result
 
