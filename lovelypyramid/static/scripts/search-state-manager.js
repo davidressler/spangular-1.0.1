@@ -4,7 +4,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     // Local Vars
     //////////////
     var searchObj = {
-        beds: 4,
+        beds: [2],
         lat: 37,
         lon: -122,
         zoom: 12
@@ -15,6 +15,13 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         'lat': true,
         'lon': true
     };
+
+    var typeOfParams = {
+        beds: 'intArray',
+        lat: 'float',
+        lon: 'float',
+        zoom: 'int'
+    }
 
 
     // Listeners
@@ -57,12 +64,45 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         var nulledVals = false;
 
         for (var key in search) {
-            search[key] = parseFloat(search[key]);
-            if (( !( key in requiredParams ) ) && ( ( search[key].toString() == 'NaN') || search[key] === null || search[key] == '')) {
+            if (typeOfParams[key] === 'float') {
+                search[key] = parseFloat(search[key]);
+            }
+            if (typeOfParams[key] === 'int') {
+                search[key] = parseInt(search[key]);
+            }
+            if (typeOfParams[key] === 'intArray') {
+                var newBeds = [];
+                console.log('asdfdasa', search[key]);
+
+                console.log('TO', typeof search[key]);
+                if (typeof search[key] === 'string') {
+                    newBeds = search[key].split('-');
+                } else {
+                    newBeds = search[key];
+                }
+
+                console.log('NEWBEDS', newBeds);
+                
+                var final = [];
+                for (var i=0; i < newBeds.length; i++) {
+                    if (!isNaN(parseInt(newBeds[i]))) {
+                        final.push(parseInt(newBeds[i]));
+                    }
+                }
+                if (final.length === 0) {
+                    console.log(final)
+                    search[key] = null;
+                } else {
+                    search[key] = final;
+                }
+            }
+
+            if (( !( key in requiredParams ) ) && ( ( search[key] === null || search[key].toString() == 'NaN') || search[key] == '')) {
                 nulledVals = true;
                 delete search[key];
             }
         }
+        console.log(search)
 
         return search;
     }

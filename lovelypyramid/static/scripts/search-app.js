@@ -22,7 +22,7 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse)
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function (pos) {
                             search = {
-                                beds: null,
+                                beds: [],
                                 lat: pos.coords.latitude,
                                 lon: pos.coords.longitude,
                                 zoom: 15
@@ -53,8 +53,36 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
         $scope.$emit('SearchCtrlReady');
     }, 0);
 
+    $scope.params = { beds: [2,3], lat: 40, lon: -150, zoom: 19 };
 
-    $scope.params = { beds: 3, lat: 40, lon: -150, zoom: 19 };
+    $scope.beds = [];
+    $scope.updateBeds = function() {
+        if ($scope.params != undefined) {
+            var result = [];
+            for (var i = 0; i < 5; i++) {
+                var bed = {};
+                bed['value'] = i;
+                if ($scope.params.beds.indexOf(i) === (-1)) {
+                    bed['checked'] = false;
+                } else {
+                    bed['checked'] = true;
+                }
+                result.push(bed);
+            }
+            $scope.beds = result;
+        }
+    };
+    $scope.updateBedsOnModel = function(index) {
+        $scope.beds[index].checked = !$scope.beds[index].checked;
+        var beds = [];
+        for (var bed in $scope.beds){
+            if(bed.checked) beds.push(parseInt(bed.value));
+        }
+
+        console.log($scope.params.beds)
+        $scope.params.beds = beds;
+        $scope.updateModel();
+    };
 
 	$scope.updateModel = function () {
 //		var url = $state.href($state.current.name, $scope.params);
@@ -125,18 +153,18 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
 
 	$scope.filter = function () {
-		colorConsole('FILTERING', 'blue', '70px');
+		colorConsole('FILTERING', 'blue', '21px');
         $scope.updateModel({stopRefresh:true});
     };
 
     $scope.$on('SearchUpdated', function(evt, args) {
         $scope.params = args;
+        $scope.updateBeds();
         $scope.syncMapWithSearch();
+        console.log($scope.params)
     });
 
     $scope.setView = function(name) {
-        console.log('SETVIEW', $scope.params);
-
         if (name === 'list') {
             var url = $state.href('search.list', $scope.params);
             $location.url(url);

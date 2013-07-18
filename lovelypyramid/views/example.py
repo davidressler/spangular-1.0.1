@@ -37,7 +37,7 @@ def search(request):
 	print 'making request'
 
 	result = {}
-	result['beds'] = 2
+	result['beds'] = [2]
 	result['lat'] = 33
 	result['lon'] = -127
 	result['zoom'] = 15
