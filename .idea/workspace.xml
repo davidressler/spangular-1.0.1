@@ -44,8 +44,8 @@
     <file path="$PROJECT_DIR$/lovelypyramid/static/bower_components/angular-ui/test/lib/angular-1.0.1/angular.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374013783583" ignored="false" />
     <file path="$PROJECT_DIR$/lovelypyramid/static/bower_components/angular-ui/build/angular-ui.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374013793230" ignored="false" />
     <file path="/app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374107943895" ignored="false" />
-    <file path="/search-filter.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374015117239" ignored="false" />
-    <file path="/search-app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374108433331" ignored="false" />
+    <file path="/search-filter.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374112775433" ignored="false" />
+    <file path="/search-app.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374112809700" ignored="false" />
     <file path="/a.dummy" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374108375232" ignored="false" />
     <file path="/Python Console" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018163856" ignored="false" />
     <file path="/search.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018144744" ignored="false" />
@@ -53,6 +53,7 @@
     <file path="/main.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374089792702" ignored="false" />
     <file path="/listing-cell.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374107406627" ignored="false" />
     <file path="/list-view.html" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374107536559" ignored="false" />
+    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374113185681" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +82,15 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="search-state-manager.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="16" selection-start="2289" selection-end="2289" vertical-scroll-proportion="0.49080622">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="search-listing.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-listing.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,15 +104,6 @@
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-map.html">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="route.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lovelypyramid/route.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="105" selection-start="981" selection-end="981" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -130,9 +131,7 @@
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/list-view.html">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding>
-                <element signature="n#style#0;n#listing-cell#0;n#!!top" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -140,25 +139,25 @@
       <file leaf-file-name="example.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="22" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0">
+            <state line="23" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search-app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="search-filter.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="108" selection-start="270" selection-end="270" vertical-scroll-proportion="-3.75">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search-app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="154" column="52" selection-start="4780" selection-end="4780" vertical-scroll-proportion="0.7463768">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hack-maps.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/love-shack/hack-maps.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="503" column="8" selection-start="14470" selection-end="14470" vertical-scroll-proportion="-31.52">
+            <state line="70" column="13" selection-start="2463" selection-end="2463" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -177,7 +176,6 @@
         <option value="$PROJECT_DIR$/lovelypyramid/templates/example.jinja2.html" />
         <option value="$PROJECT_DIR$/lovelypyramid/__init__.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/templates/index.html" />
-        <option value="$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html" />
         <option value="$PROJECT_DIR$/lovelypyramid/templates/index.jinja2" />
         <option value="$PROJECT_DIR$/development.ini" />
         <option value="$PROJECT_DIR$/lovelypyramid/model/search.py" />
@@ -185,16 +183,18 @@
         <option value="$PROJECT_DIR$/lovelypyramid/route.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/views/list-view.html" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/app.js" />
-        <option value="$PROJECT_DIR$/lovelypyramid/views/example.py" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/views/listing-cell.html" />
+        <option value="$PROJECT_DIR$/lovelypyramid/views/example.py" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
-    <option name="width" value="1920" />
-    <option name="height" value="1359" />
+    <option name="width" value="1900" />
+    <option name="height" value="1051" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -418,14 +418,14 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Github/Pearl" />
+    <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Github/Pearl" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -545,23 +545,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1920" height="1359" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="22" width="1900" height="1051" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227848" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25625" sideWeight="0.6772152" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17907228" sideWeight="0.7894737" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.340981" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227848" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32515824" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3226152" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21052632" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227848" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -630,30 +630,14 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/development.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="23" selection-start="131" selection-end="144" vertical-scroll-proportion="-3.6">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/views/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="1" column="0" selection-start="19" selection-end="19" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="18" selection-start="985" selection-end="985" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="25" selection-start="492" selection-end="492" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -667,37 +651,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/templates/index.jinja2">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="25" selection-start="594" selection-end="594" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="13" column="25" selection-start="594" selection-end="594" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/love-shack/hack-maps.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="503" column="8" selection-start="14470" selection-end="14470" vertical-scroll-proportion="-31.52">
+        <state line="503" column="8" selection-start="14470" selection-end="14470" vertical-scroll-proportion="0.021216407">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/list-view.html">
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/route.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-          <folding>
-            <element signature="n#style#0;n#listing-cell#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="10" selection-start="10" selection-end="10" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="22" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0">
+        <state line="13" column="105" selection-start="981" selection-end="981" vertical-scroll-proportion="0.27581328">
           <folding />
         </state>
       </provider>
@@ -716,16 +682,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/route.py">
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/listing-cell.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="105" selection-start="981" selection-end="981" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/listing-cell.html">
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="10" selection-start="10" selection-end="10" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/list-view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/views/example.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="306" selection-end="306" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/views/search-filter.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="108" selection-start="270" selection-end="270" vertical-scroll-proportion="-3.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="13" selection-start="2463" selection-end="2463" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -737,9 +731,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
+    <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="52" selection-start="4780" selection-end="4780" vertical-scroll-proportion="0.7463768">
+        <state line="84" column="16" selection-start="2289" selection-end="2289" vertical-scroll-proportion="0.49080622">
           <folding />
         </state>
       </provider>
