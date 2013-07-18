@@ -11,6 +11,8 @@ def map_routes(config):
 
 	config.add_route('testinging', '/testing', view='lovelypyramid.views.example.testing', renderer='templates/testing.jinja2')
 
+	config.add_route('listings', '/listings', view='lovelypyramid.views.example.listings', renderer='json')
+
 	config.add_route('saveSearch', '/save/search', view="lovelypyramid.views.example.saveSearch", renderer='json')
 
 	config.add_route('example_json', '/json', view='lovelypyramid.views.example.example_json', renderer='json')

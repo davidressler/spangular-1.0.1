@@ -1,5 +1,9 @@
 'use strict';
 
+function colorConsole(msg, color, size) {
+	console.log("%c" + msg, "color:" + color + ";font-size:" + size + ";");
+}
+
 var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'Search-State-Mgr', 'ngCookies']);
 
 app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, SearchStateMgr){
@@ -8,7 +12,6 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
     $rootScope.Search = Search;
     $rootScope.allowRefresh = true;
     $rootScope.$on('$stateChangeStart', function(ev) {
-
         if(!$rootScope.allowRefresh){
 	        ev.preventDefault();
             $rootScope.allowRefresh = true;
@@ -79,13 +82,17 @@ app.directive('listView', function() {
 var listings = angular.module('listings', []);
 
 listings.factory('Listings', function($http) {
+
+	this.getListings = function() {
+		var promise = $http.get('/listings').then(function (response) {
+			console.log(typeof(response.data));
+			return response.data;
+		});
+		return promise;
+	};
+
     return {
-        getListings: function(callback) {
-//            $http.get('http://pro.livelovely.com/frontendtest/yolo').success(function(data) {
-//                callback(data);
-//            });
-	        callback([]);
-        }
+        getListings: this.getListings
     }
 });
 

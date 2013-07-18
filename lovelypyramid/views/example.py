@@ -1,4 +1,4 @@
-from spot.model.user.usersearch import UserSearch
+from chafe.mill.listing import ListingMill
 
 def example_json(request):
 
@@ -44,6 +44,28 @@ def search(request):
 	#result['failed'] = True
 
 	return result
+
+def listings(request):
+	listings = []
+	for num in range(0, 10):
+		offset = num * 10
+		listings += ListingMill.Get_By_Pinterest_Search(1, None, None, None, None, offset, 'CA')
+
+	listingList = []
+	for listing in listings:
+		listingInfo = {}
+		listingInfo['Address'] = listing.LocationTitle
+		listingInfo['Beds'] = listing.Beds
+		listingInfo['Baths'] = listing.Baths
+		listingInfo['Latitude'] = listing.Latitude
+		listingInfo['Longitude'] = listing.Longitude
+		listingInfo['Price'] = listing.Price
+		listingInfo['Photos'] = listing.Photos
+		listingInfo['Abstract'] = listing.Abstract
+		listingInfo['id'] = listing.Id
+		listingList.append(listingInfo)
+
+	return listingList
 
 def saveSearch(request):
 	return {'success': True}

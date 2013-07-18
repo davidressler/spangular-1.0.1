@@ -119,11 +119,13 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
         }
     });
 
-	Listings.getListings(function(data) {
+	Listings.getListings().then(function(data) {
 		$scope.listings = data;
 	});
 
+
 	$scope.filter = function () {
+		colorConsole('FILTERING', 'blue', '70px');
         $scope.updateModel({stopRefresh:true});
     };
 
@@ -149,13 +151,13 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 searchModule.filter('searchFilter', function($stateParams) {
 
     return function(input) {
-        var res = [];
-
+        var result = [];
+		colorConsole($stateParams.beds, 'green', '14px');
         for (var i in input) {
-            if (input[i].Beds == $stateParams.beds || $stateParams.beds === null) {
-                res.push(input[i]);
+            if (input[i].Beds == $stateParams.beds || $stateParams.beds === undefined) {
+                result.push(input[i]);
             }
         }
-        return res;
+        return result;
     };
 });
