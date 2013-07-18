@@ -1,142 +1,95 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.factory('Search', function($http, $rootScope) {
-    var defaultZoom = 12,
-        defaultBeds = 3,
-        defaultLat = 37,
-        defaultLon = -122,
-        searchObj = {
-            beds: defaultBeds,
-            lat: defaultLat,
-            lon: defaultLon,
-            zoom: defaultZoom
-        },
-	    madeRequest = false;
-
-    var requiredParams = {
-        'zoom': true,
-        'lat': true,
-        'lon': true
+searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse) {
+    this.saveSearch = function(search) {
+        $http.post('/save/search', search).success(function(data) {
+            $cookieStore.put('search', search);
+        });
     };
 
     this.getSearch = function() {
-	    console.log("GET SEARCH");
-	    var that = this;
-	    var search = {};
-	    //Is there a search object stored on the server?
-		if(!madeRequest){
-			return $http.get('/get/search').then(function(data){
-				searchObj = data.data;
-				madeRequest = true;
-				return searchObj;
+        var that = this;
+        var search = $cookieStore.get('search');
 
-			});
+        if (search != undefined) {
+            return search;
+        } else {
+            var worker = new Worker('/static/scripts/workers/getSearch.js');
 
-		} else {
-			return searchObj;
-		}
+            worker.addEventListener("message", function (data) {
+                var parsedData = $.parseJSON(data.data);
+                if ('failed' in parsedData) {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (pos) {
+                            search = {
+                                beds: null,
+                                lat: pos.coords.latitude,
+                                lon: pos.coords.longitude,
+                                zoom: 15
+                            }
+                            console.log('about to RET SERVER SRCH from GEO LOCATION');
+                            that.saveSearch(search);
+                            $rootScope.returnedServerSearch(search);
+                        });
+                    }
+                } else {
+                    $rootScope.returnedServerSearch(parsedData);
+                    $cookieStore.put('search', parsedData);
+                }
+            }, false);
+        }
 
-
-	    var ReturnSearch = function() {
-		    console.log('in return function');
-		    //If all else fails
-		    if (!that.isValid(search)) {
-			    console.log('search isnt valid; updating to defaults');
-			    search = searchObj;
-		    } else {
-			    console.log('search is valid! new shit');
-			    searchObj = search;
-		    }
-
-		    // Filter out non-required null values
-		    var nulledVals = false,
-			    smartSearch = search;
-
-		    for (var key in searchObj) {
-			    if (( !( key in requiredParams ) ) && ( ( searchObj[key].toString() == 'NaN') || searchObj[key] === null || searchObj[key] == '')) {
-				    nulledVals = true;
-				    delete smartSearch[key];
-			    }
-		    }
-
-		    if (nulledVals) {
-			    return smartSearch;
-		    }
-		    return searchObj;
-	    };
-
-    };
-
-	this.isValid = function(search){
-		var valid = true;
-		for(var param in requiredParams){
-			if(!(param in search) || search[param] === null || search[param].toString() === 'NaN'){
-				valid = false;
-			}
-		}
-		return valid;
-	};
-
-	this.resolveSearch = function(stateParams) {
-		var equal = true;
-		for (var key in searchObj) {
-			if (stateParams[key] != searchObj[key]) {
-				equal = false;
-			}
-		}
-		return equal;
-	};
-
-    this.setSearch = function(filters) {
-	    if(this.isValid(filters)){
-		    for (var filter in filters) {
-			    if (searchObj.hasOwnProperty(filter)) {
-				    searchObj[filter] = parseFloat(filters[filter]);
-			    }
-		    }
-	    }
-        return searchObj;
     };
 
     return {
         getSearch: this.getSearch,
-        isValid: this.isValid,
-        resolveSearch: this.resolveSearch,
-        setSearch: this.setSearch
+        saveSearch: this.saveSearch
     }
 });
 
-function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $http) {
+searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMgr, Listings, $state, $location, $timeout) {
 
-    $scope.params = Search.getSearch();
+    $timeout(function () {
+        $scope.$emit('SearchCtrlReady');
+    }, 0);
 
-	$scope.updateModel = function (config) {
-		var url = $state.href($state.current.name, $scope.params);
-		if('stopRefresh' in config && config['stopRefresh'] === true ) {
-			$rootScope.allowRefresh = false;
-		}
-		$location.url(url);
+
+    $scope.params = { beds: 3, lat: 40, lon: -150, zoom: 19 };
+
+	$scope.updateModel = function () {
+//		var url = $state.href($state.current.name, $scope.params);
+//		if('stopRefresh' in config && config['stopRefresh'] === true ) {
+//			$rootScope.allowRefresh = false;
+//		}
+//		$location.url(url);
+        SearchStateMgr.viewModelUpdated($scope.params);
 	};
 
-	$scope.updateMap = function(mapModel, zoom_changed) {
+	$scope.syncSearchWithMap = function(mapModel, zoom_changed) {
 		if (zoom_changed || $scope.params.zoom != mapModel.zoom || $scope.params.lon != mapModel.center.lng() || $scope.params.lat != mapModel.center.lat()) {
-			$scope.params.zoom = mapModel.zoom;
-			$scope.params.lon = mapModel.center.lng();
-			$scope.params.lat = mapModel.center.lat();
-			Search.setSearch($scope.params);
-
-			$scope.updateModel({stopRefresh: true});
+            $scope.params.zoom = mapModel.zoom;
+            $scope.params.lon = mapModel.center.lng();
+            $scope.params.lat = mapModel.center.lat();
+            $scope.updateModel();
 		}
 	};
 
-	console.log($scope.params.lat);
-	console.log($scope.params.lon);
+    $scope.syncMapWithSearch = function() {
+        if($scope.params != undefined) {
+            $scope.center = {
+                latitude: $scope.params.lat,
+                longitude: $scope.params.lon
+            };
+            $scope.zoom = $scope.params.zoom;
+        }
+    }
 
     angular.extend($scope, {
         center: {
             latitude: $scope.params.lat, // initial map center latitude
             longitude: $scope.params.lon // initial map center longitude
         },
+        zoom: $scope.params.zoom,
 	    options: {
 			mapTypeControl: false,
 		    streetViewControl: false,
@@ -151,7 +104,7 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 //                }
             },
             idle: function (mapModel) {
-	            $scope.updateMap(mapModel);
+	            $scope.syncSearchWithMap(mapModel);
 
             },
 	        dragstart: function(mapModel) {
@@ -161,7 +114,7 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 
             },
 	        zoom_changed: function(mapModel) {
-		        $scope.updateMap(mapModel, true);
+		        $scope.syncMapWithSearch(mapModel, true);
 	        }
         }
     });
@@ -171,20 +124,27 @@ function SearchCtrl($scope, Search, Listings, $state, $location, $rootScope, $ht
 	});
 
 	$scope.filter = function () {
-        Search.setSearch($scope.params);
         $scope.updateModel({stopRefresh:true});
     };
 
-	$scope.$on('updateSearch', function(){
-		$scope.params = Search.getSearch();
-	});
+    $scope.$on('SearchUpdated', function(evt, args) {
+        $scope.params = args;
+        $scope.syncMapWithSearch();
+    });
 
-	$scope.$watch('$scope.params', function(){
-		$rootScope.changeUrl();
-	}, true);
+    $scope.setView = function(name) {
+        console.log('SETVIEW', $scope.params);
 
-};
-searchModule.$inject = ['$scope', '$state', '$stateParams', '$location', 'Search', 'Listings', '$rootScope'];
+        if (name === 'list') {
+            var url = $state.href('search.list', $scope.params);
+            $location.url(url);
+        }  else if (name === 'map') {
+            var url = $state.href('search.map', $scope.params);
+            $location.url(url);
+        }
+    };
+
+});
 
 searchModule.filter('searchFilter', function($stateParams) {
 
