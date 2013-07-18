@@ -1,9 +1,11 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse) {
+searchModule.factory('Search', function($http, $rootScope, $cookieStore, $timeout) {
     this.saveSearch = function(search) {
         $http.post('/save/search', search).success(function(data) {
+            console.log('saved this: ', search);
             $cookieStore.put('search', search);
+            console.log('and committed this to cookies', $cookieStore.get('search'))
         });
     };
 
@@ -12,6 +14,7 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse)
         var search = $cookieStore.get('search');
 
         if (search != undefined) {
+            console.log('got from cookies', search)
             return search;
         } else {
             var worker = new Worker('/static/scripts/workers/getSearch.js');
@@ -19,10 +22,11 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse)
             worker.addEventListener("message", function (data) {
                 var parsedData = $.parseJSON(data.data);
                 if ('failed' in parsedData) {
+                    console.log('got from LOCAL')
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function (pos) {
                             search = {
-                                beds: [],
+                                beds: [1],
                                 lat: pos.coords.latitude,
                                 lon: pos.coords.longitude,
                                 zoom: 15
@@ -33,6 +37,7 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse)
                         });
                     }
                 } else {
+                    console.log('got from server')
                     $rootScope.returnedServerSearch(parsedData);
                     $cookieStore.put('search', parsedData);
                 }
@@ -53,11 +58,32 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
         $scope.$emit('SearchCtrlReady');
     }, 0);
 
-    $scope.params = { beds: [2,3], lat: 40, lon: -150, zoom: 19 };
+    $scope.params = { beds: [], lat: -40, lon: -150, zoom: 2 };
 
-    $scope.beds = [];
+    $scope.beds = [
+        {
+            value: 0,
+            checked: false
+        }, {
+            value: 1,
+            checked: false
+        }, {
+            value: 2,
+            checked: false
+        }, {
+            value: 3,
+            checked: false
+        }, {
+            value: 4,
+            checked: false
+        }, {
+            value: 5,
+            checked: false
+        }
+    ];
+
     $scope.updateBeds = function() {
-        if ($scope.params != undefined) {
+        if ($scope.params != undefined && $scope.params.beds != undefined) {
             var result = [];
             for (var i = 0; i < 5; i++) {
                 var bed = {};
@@ -76,7 +102,9 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
         $scope.beds[index].checked = !$scope.beds[index].checked;
         var beds = [];
         for (var bed in $scope.beds){
-            if(bed.checked) beds.push(parseInt(bed.value));
+            if($scope.beds[bed].checked) {
+                beds.push(parseInt($scope.beds[bed].value));
+            }
         }
 
         console.log($scope.params.beds)
@@ -153,7 +181,6 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
 
 	$scope.filter = function () {
-		colorConsole('FILTERING', 'blue', '21px');
         $scope.updateModel({stopRefresh:true});
     };
 
@@ -176,16 +203,24 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
 });
 
-searchModule.filter('searchFilter', function($stateParams) {
+searchModule.filter('searchFilter', function() {
 
-    return function(input) {
+    return function(input, params) {
         var result = [];
-		colorConsole($stateParams.beds, 'green', '14px');
-        for (var i in input) {
-            if (input[i].Beds == $stateParams.beds || $stateParams.beds === undefined) {
+        if ('beds' in params) {
+            for (var bed in params.beds) {
+                for (var i in input) {
+                    if (input[i].Beds === params.beds[bed]) {
+                        result.push(input[i]);
+                    }
+                }
+            }
+        } else {
+            for (var i in input) {
                 result.push(input[i]);
             }
         }
+        console.log('RESULT LENGTH: ', result.length);
         return result;
     };
 });

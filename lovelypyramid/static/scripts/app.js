@@ -1,8 +1,8 @@
 'use strict';
 
-function colorConsole(msg, color, size) {
-	console.log("%c" + msg, "color:" + color + ";font-size:" + size + ";");
-}
+//function colorConsole(msg, color, size) {
+//	console.log("%c" + msg, "color:" + color + ";font-size:" + size + ";");
+//}
 
 var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'Search-State-Mgr', 'ngCookies']);
 
@@ -40,7 +40,7 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
         .when('', '/')
         .when('/', '/search')
-        .when('/search', '/search/list')
+        .when('/search', '/search/map')
         .otherwise('/');
 
     $stateProvider
@@ -85,7 +85,6 @@ listings.factory('Listings', function($http) {
 
 	this.getListings = function() {
 		var promise = $http.get('/listings').then(function (response) {
-			console.log(typeof(response.data));
 			return response.data;
 		});
 		return promise;

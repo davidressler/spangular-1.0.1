@@ -43,6 +43,8 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     };
 
     var updateFactoryModel = function () {
+        console.log('SAVING SEARCH FROM FACTORY')
+        console.log(searchObj)
         $rootScope.Search.saveSearch(searchObj);
     };
 
@@ -72,17 +74,13 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
             }
             if (typeOfParams[key] === 'intArray') {
                 var newBeds = [];
-                console.log('asdfdasa', search[key]);
 
-                console.log('TO', typeof search[key]);
                 if (typeof search[key] === 'string') {
-                    newBeds = search[key].split('-');
-                } else {
+                    newBeds = search[key].split(',');
+                } else if (Array.isArray(search[key])) {
                     newBeds = search[key];
                 }
 
-                console.log('NEWBEDS', newBeds);
-                
                 var final = [];
                 for (var i=0; i < newBeds.length; i++) {
                     if (!isNaN(parseInt(newBeds[i]))) {
@@ -90,7 +88,6 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
                     }
                 }
                 if (final.length === 0) {
-                    console.log(final)
                     search[key] = null;
                 } else {
                     search[key] = final;
@@ -102,7 +99,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
                 delete search[key];
             }
         }
-        console.log(search)
+        console.log('Current search', search)
 
         return search;
     }
