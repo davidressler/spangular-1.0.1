@@ -76,7 +76,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         return false;
     };
 
-    var syncSearchModel = function() {
+    var lastResortSyncSearchModel = function() {
         updateUrl(true);
         updateFactoryModel();
         updateViewModel();
@@ -93,7 +93,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         } else {
             var result = $rootScope.Search.getSearch();
             if (result == null) {
-                syncSearchModel();
+                lastResortSyncSearchModel();
             } else {
                 searchObj = result;
                 updateUrl(true);
