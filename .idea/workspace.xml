@@ -36,7 +36,7 @@
     <file path="/a.dummy" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374017448583" ignored="false" />
     <file path="/Python Console" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018163856" ignored="false" />
     <file path="/search.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018144744" ignored="false" />
-    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374104814775" ignored="false" />
+    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374106095072" ignored="false" />
     <file path="/*.regexp" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374087842875" ignored="false" />
     <file path="/getSearch.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098506381" ignored="false" />
     <file path="/testing.jinja2" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098421559" ignored="false" />
@@ -63,7 +63,7 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="3" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
+            <state line="34" column="41" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -72,7 +72,7 @@
       <file leaf-file-name="search-app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="38" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
+            <state line="71" column="54" selection-start="2657" selection-end="2657" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,7 +81,7 @@
       <file leaf-file-name="search-state-manager.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="34" selection-start="2165" selection-end="2165" vertical-scroll-proportion="0.41206676">
+            <state line="65" column="0" selection-start="1758" selection-end="1758" vertical-scroll-proportion="0.6546855">
               <folding />
             </state>
           </provider>
@@ -127,8 +127,8 @@
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/workers/getSearch.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/templates/index.jinja2" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/views/search-map.html" />
-        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/views/example.py" />
+        <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/app.js" />
         <option value="$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js" />
       </list>
@@ -692,21 +692,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="3" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0">
+        <state line="34" column="41" selection-start="1063" selection-end="1063" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="38" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
+        <state line="71" column="54" selection-start="2657" selection-end="2657" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="34" selection-start="2165" selection-end="2165" vertical-scroll-proportion="0.41206676">
+        <state line="65" column="0" selection-start="1758" selection-end="1758" vertical-scroll-proportion="0.6546855">
           <folding />
         </state>
       </provider>

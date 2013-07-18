@@ -3,7 +3,6 @@ var searchModule = angular.module('Search-Module', []);
 searchModule.factory('Search', function($http, $rootScope, $cookieStore, $parse) {
     this.saveSearch = function(search) {
         $http.post('/save/search', search).success(function(data) {
-            console.log('SUCCESSFULLY SAVED: ', search);
             $cookieStore.put('search', search);
         });
     };
@@ -63,21 +62,14 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 //			$rootScope.allowRefresh = false;
 //		}
 //		$location.url(url);
-        console.log('ViewModel is about to update:', $scope.params);
         SearchStateMgr.viewModelUpdated($scope.params);
 	};
 
 	$scope.syncSearchWithMap = function(mapModel, zoom_changed) {
 		if (zoom_changed || $scope.params.zoom != mapModel.zoom || $scope.params.lon != mapModel.center.lng() || $scope.params.lat != mapModel.center.lat()) {
             $scope.params.zoom = mapModel.zoom;
-            console.log('ZOOM ==', $scope.params.zoom);
             $scope.params.lon = mapModel.center.lng();
-            console.log('LONG ==', $scope.params.lon);
             $scope.params.lat = mapModel.center.lat();
-            console.log('LAT ==', $scope.params.lat);
-
-            console.log('All together now... ==', $scope.params);
-
             $scope.updateModel();
 		}
 	};

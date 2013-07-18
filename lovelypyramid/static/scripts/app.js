@@ -9,8 +9,6 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
     $rootScope.allowRefresh = true;
     $rootScope.$on('$stateChangeStart', function(ev) {
 
-        console.log($rootScope.allowRefresh, $stateParams);
-
         if(!$rootScope.allowRefresh){
 	        ev.preventDefault();
             $rootScope.allowRefresh = true;
@@ -25,7 +23,6 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
 	});
 
     $rootScope.returnedServerSearch = function(search) {
-        console.log('Returned Server Search');
         SearchStateMgr.factoryModelUpdated(search);
     }
 });
