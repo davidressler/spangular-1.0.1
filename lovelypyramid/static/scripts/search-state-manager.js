@@ -70,6 +70,7 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
     var setSearch = function(search) {
         if (validSearch(search)) {
             searchObj = trimUselessParams(search);
+            $rootScope.Search.saveSearch(search);
             return true;
         }
         return false;

@@ -36,7 +36,7 @@
     <file path="/a.dummy" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374017448583" ignored="false" />
     <file path="/Python Console" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018163856" ignored="false" />
     <file path="/search.py" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374018144744" ignored="false" />
-    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374106095072" ignored="false" />
+    <file path="/search-state-manager.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374106355422" ignored="false" />
     <file path="/*.regexp" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374087842875" ignored="false" />
     <file path="/getSearch.js" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098506381" ignored="false" />
     <file path="/testing.jinja2" changelist="7b64d545-dd69-4972-8fce-40ff5c6a9df5" time="1374098421559" ignored="false" />
@@ -81,7 +81,7 @@
       <file leaf-file-name="search-state-manager.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="0" selection-start="1758" selection-end="1758" vertical-scroll-proportion="0.6546855">
+            <state line="72" column="49" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.53786904">
               <folding />
             </state>
           </provider>
@@ -706,7 +706,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lovelypyramid/static/scripts/search-state-manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1758" selection-end="1758" vertical-scroll-proportion="0.6546855">
+        <state line="72" column="49" selection-start="1963" selection-end="1963" vertical-scroll-proportion="0.53786904">
           <folding />
         </state>
       </provider>
