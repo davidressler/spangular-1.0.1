@@ -52,15 +52,15 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
         $rootScope.$broadcast('SearchUpdated', searchObj);
     };
 
-    var validSearch = function (search) {
-        var valid = true;
-        for (var param in requiredParams) {
-            if (!(param in search) || search[param] === null || search[param].toString() === 'NaN') {
-                valid = false;
-            }
-        }
-        return valid;
-    };
+//    var validSearch = function (search) {
+//        var valid = true;
+//        for (var param in requiredParams) {
+//            if (!(param in search) || search[param] === null || search[param].toString() === 'NaN') {
+//                valid = false;
+//            }
+//        }
+//        return valid;
+//    };
 
     var trimUselessParams = function(search) {
         var nulledVals = false;

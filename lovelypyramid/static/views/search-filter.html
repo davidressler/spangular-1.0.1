@@ -1,11 +1,13 @@
 <table class="filter">
     <tr>
         <td>Zoom Level:</td>
-        <td>{{ params.zoom }}</td>
+        <td>{{ search.zoom }}</td>
         <td>Beds:</td>
-        <td><span ng-repeat="bed in beds">
-                {{ bed.value }}<input type="checkbox" ng-checked="bed.checked" ng-click="updateBedsOnModel($index)">
-            </span>
+        <td>
+            {{ search.beds }}
+            <!--<span ng-repeat="bed in beds">-->
+                <!--{{ bed.value }}<input type="checkbox" ng-checked="bed.checked" ng-click="updateBedsOnModel($index)">-->
+            <!--</span>-->
         </td>
         <td><a ng-class="{'active': $state.includes('search.map'), ' btn btn-primary': true}" ng-click="setView('map')">Map</a></td>
         <td><a ng-class="{'active': $state.includes('search.list'), 'btn btn-success': true}" ng-click="setView('list')">List</a></td>

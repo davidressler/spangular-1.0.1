@@ -1,151 +1,218 @@
 var searchModule = angular.module('Search-Module', []);
 
-searchModule.factory('Search', function($http, $rootScope, $cookieStore, $timeout) {
-    this.saveSearch = function(search) {
-        $http.post('/save/search', search).success(function(data) {
-            console.log('saved this: ', search);
-            $cookieStore.put('search', search);
-            console.log('and committed this to cookies', $cookieStore.get('search'))
-        });
+searchModule.factory('Search', function($http, $rootScope, $cookieStore, $q, $log, $timeout) {
+    var requiredParams = {
+        'zoom': true,
+        'lat': true,
+        'lon': true
     };
 
-    this.getSearch = function() {
-        var that = this;
-        var search = $cookieStore.get('search');
+    var paramTypes = {
+        'beds': 'intArr',
+        'center': 'center',
+        'lat': 'int',
+        'lon': 'int',
+        'zoom': 'int'
+    };
 
-        if (search != undefined) {
-            console.log('got from cookies', search)
-            return search;
+    var validParams = function (url) {
+        var valid = true;
+
+        var validParams = {
+            'zoom': true,
+            'lat': true,
+            'lon': true
+        };
+
+        if ('zoom' in url && 'lat' in url && 'lon' in url) {
+            for (var param in validParams) {
+                if (url[param] === null || url[param].toString() === 'NaN') {
+                    valid = false;
+                }
+            }
         } else {
-            var worker = new Worker('/static/scripts/workers/getSearch.js');
+            valid = false;
+        }
 
-            worker.addEventListener("message", function (data) {
-                var parsedData = $.parseJSON(data.data);
-                if ('failed' in parsedData) {
-                    console.log('got from LOCAL')
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function (pos) {
-                            search = {
-                                beds: [1],
-                                lat: pos.coords.latitude,
-                                lon: pos.coords.longitude,
-                                zoom: 15
-                            }
-                            console.log('about to RET SERVER SRCH from GEO LOCATION');
-                            that.saveSearch(search);
-                            $rootScope.returnedServerSearch(search);
-                        });
+        return valid;
+    };
+
+    var validModel = function (search) {
+        var valid = true;
+
+        var validParams = {
+            'zoom': true,
+            'center': true
+        };
+
+        if ('zoom' in search && 'center' in search) {
+            for (var param in validParams) {
+                if (param === 'center') {
+                    if (search[param].lat === null || search[param].lat.toString() === 'NaN' || search[param].lon === null || search[param].lon.toString() === 'NaN') {
+                        valid = false;
                     }
                 } else {
-                    console.log('got from server')
-                    $rootScope.returnedServerSearch(parsedData);
-                    $cookieStore.put('search', parsedData);
+                    if (search[param] === null || search[param].toString() === 'NaN') {
+                        valid = false;
+                    }
                 }
-            }, false);
+            }
+        } else {
+            valid = false;
         }
+
+        return valid;
+    };
+
+    var formatReturnedSearch = function(search) {
+        for (var param in search) {
+            if (paramTypes[param] === 'center') {
+                search['center'].lat = parseFloat(search['center'].lat);
+                search['center'].lon = parseFloat(search['center'].lon);
+            }
+            if (paramTypes[param] === 'int') {
+                search[param] = parseInt(search[param]);
+            }
+        }
+        return search;
+    };
+
+    var formatParams = function(search) {
+        var newSearch = {}
+
+        newSearch['center'] = {
+            'lat': search.lat,
+            'lon': search.lon
+        }
+
+        for (var param in search) {
+            if (param != 'lon' && param != 'lat') {
+                newSearch[param] = search[param];
+            }
+        }
+
+        return newSearch;
+    };
+
+    this.saveSearchFromURL = function(search) {
+        if (validParams(search)) {
+            var search = formatParams(search);
+            $http.post('/save/search', search).success(function (data) {
+                colorConsole('save from url', 'green', '18px');
+                    $cookieStore.put('search', search);
+                    $rootScope.$broadcast('SearchUpdated');
+
+            });
+        } else {
+            $rootScope.$broadcast('SearchUpdated');
+        }
+    };
+
+    this.saveSearchFromModel = function(search) {
+        if (validModel(search)) {
+            $http.post('/save/search', search).success(function (data) {
+                    colorConsole('save from model', 'blue', '18px');
+                    console.log(search);
+                    $cookieStore.put('search', search);
+                    $rootScope.$broadcast('SearchUpdated');
+            });
+        } else {
+            $rootScope.$broadcast('SearchUpdated');
+        }
+    }
+
+    this.getSearch = function() {
+        var search = $cookieStore.get('search');
+        $log.error('GETTING COOKIE:', search);
+
+        if (search != null) {
+            var deferred = $q.defer();
+            deferred.resolve(formatReturnedSearch(search));
+            return deferred.promise;
+        } else {
+            var promise = $http.get('/get/search').then(function (data) {
+                var formatted = formatReturnedSearch(data.data);
+                $cookieStore.put('search', formatted);
+                return formatReturnedSearch(formatted);
+            });
+
+            return promise;
+        }
+
+
+
+
+//        if (search != undefined) {
+//            deferred.resolve(search);
+//            return deferred.promise;
+//        } else {
+//
+//        }
+//
+//        $http.get('/get/search').then(function(data) {
+//            return data.data;
+//        });
+//
+//        return deferred;
+
+//        var search = $cookieStore.get('search');
+//
+//        if (search != undefined) {
+//            console.log('got from cookies', search)
+//            return search;
+//        } else {
+//            var worker = new Worker('/static/scripts/workers/getSearch.js');
+//
+//            worker.addEventListener("message", function (data) {
+//                var parsedData = $.parseJSON(data.data);
+//                if ('failed' in parsedData) {
+//                    console.log('got from LOCAL')
+//                    if (navigator.geolocation) {
+//                        navigator.geolocation.getCurrentPosition(function (pos) {
+//                            search = {
+//                                beds: [1],
+//                                lat: pos.coords.latitude,
+//                                lon: pos.coords.longitude,
+//                                zoom: 15
+//                            }
+//                            console.log('about to RET SERVER SRCH from GEO LOCATION');
+//                            that.saveSearch(search);
+//                            $rootScope.returnedServerSearch(search);
+//                        });
+//                    }
+//                } else {
+//                    console.log('got from server')
+//                    $rootScope.returnedServerSearch(parsedData);
+//                    $cookieStore.put('search', parsedData);
+//                }
+//            }, false);
+//        }
 
     };
 
     return {
         getSearch: this.getSearch,
-        saveSearch: this.saveSearch
+        saveSearchFromURL: this.saveSearchFromURL,
+        saveSearchFromModel: this.saveSearchFromModel
     }
 });
 
-searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMgr, Listings, $state, $location, $timeout) {
+searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, Listings, $state, $location, $log) {
 
-    $timeout(function () {
-        $scope.$emit('SearchCtrlReady');
-    }, 0);
-
-    $scope.params = { beds: [], lat: -40, lon: -150, zoom: 2 };
-
-    $scope.beds = [
-        {
-            value: 0,
-            checked: false
-        }, {
-            value: 1,
-            checked: false
-        }, {
-            value: 2,
-            checked: false
-        }, {
-            value: 3,
-            checked: false
-        }, {
-            value: 4,
-            checked: false
-        }, {
-            value: 5,
-            checked: false
-        }
-    ];
-
-    $scope.updateBeds = function() {
-        if ($scope.params != undefined && $scope.params.beds != undefined) {
-            var result = [];
-            for (var i = 0; i < 5; i++) {
-                var bed = {};
-                bed['value'] = i;
-                if ($scope.params.beds.indexOf(i) === (-1)) {
-                    bed['checked'] = false;
-                } else {
-                    bed['checked'] = true;
-                }
-                result.push(bed);
-            }
-            $scope.beds = result;
+    $scope.search = {
+        zoom: 2,
+        center: {
+            lat: 34,
+            lon: -122
         }
     };
-    $scope.updateBedsOnModel = function(index) {
-        $scope.beds[index].checked = !$scope.beds[index].checked;
-        var beds = [];
-        for (var bed in $scope.beds){
-            if($scope.beds[bed].checked) {
-                beds.push(parseInt($scope.beds[bed].value));
-            }
-        }
 
-        console.log($scope.params.beds)
-        $scope.params.beds = beds;
-        $scope.updateModel();
-    };
-
-	$scope.updateModel = function () {
-//		var url = $state.href($state.current.name, $scope.params);
-//		if('stopRefresh' in config && config['stopRefresh'] === true ) {
-//			$rootScope.allowRefresh = false;
-//		}
-//		$location.url(url);
-        SearchStateMgr.viewModelUpdated($scope.params);
-	};
-
-	$scope.syncSearchWithMap = function(mapModel, zoom_changed) {
-		if (zoom_changed || $scope.params.zoom != mapModel.zoom || $scope.params.lon != mapModel.center.lng() || $scope.params.lat != mapModel.center.lat()) {
-            $scope.params.zoom = mapModel.zoom;
-            $scope.params.lon = mapModel.center.lng();
-            $scope.params.lat = mapModel.center.lat();
-            $scope.updateModel();
-		}
-	};
-
-    $scope.syncMapWithSearch = function() {
-        if($scope.params != undefined) {
-            $scope.center = {
-                latitude: $scope.params.lat,
-                longitude: $scope.params.lon
-            };
-            $scope.zoom = $scope.params.zoom;
-        }
-    }
+    Search.getSearch().then(function(data) {
+        $log.warn('INITIAL GETTING SEARCH', data);
+        $scope.search = data;
+    });
 
     angular.extend($scope, {
-        center: {
-            latitude: $scope.params.lat, // initial map center latitude
-            longitude: $scope.params.lon // initial map center longitude
-        },
-        zoom: $scope.params.zoom,
 	    options: {
 			mapTypeControl: false,
 		    streetViewControl: false,
@@ -160,8 +227,7 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 //                }
             },
             idle: function (mapModel) {
-	            $scope.syncSearchWithMap(mapModel);
-
+                $scope.updateURL();
             },
 	        dragstart: function(mapModel) {
 
@@ -170,7 +236,7 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
             },
 	        zoom_changed: function(mapModel) {
-		        $scope.syncMapWithSearch(mapModel, true);
+//		        $scope.syncMapWithSearch(mapModel, true);
 	        }
         }
     });
@@ -181,22 +247,67 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, SearchStateMg
 
 
 	$scope.filter = function () {
-        $scope.updateModel({stopRefresh:true});
+//        $scope.updateModel({stopRefresh:true});
     };
 
+
+//    $scope.$watch('search.zoom', function () {
+//        console.log('IN THE ZOOM watch');
+//    });
+//    $scope.$watch('search.center.lat', function () {
+//        console.log('IN THE LAT');
+//    });
+//    $scope.$watch('search.center.lon', function () {
+//        console.log('IN THE LON');
+//    });
+
     $scope.$on('SearchUpdated', function(evt, args) {
-        $scope.params = args;
-        $scope.updateBeds();
-        $scope.syncMapWithSearch();
-        console.log($scope.params)
+        Search.getSearch().then(function (data) {
+            $scope.search = data;
+            console.log('BROADCAST GET SEARCH: ', $scope.search);
+        });
+
+
+//        $scope.updateBeds();
+//        $scope.syncMapWithSearch();
+//        console.log($scope.params)
     });
+
+    $scope.createParams = function(search) {
+        var url = '?';
+        for (var param in search) {
+            if (! (url === '?') ) {
+                url += '&'
+            }
+
+            if (param === 'center') {
+                url += 'lat='
+                url += search[param].lat;
+                url += '&lon='
+                url += search[param].lon;
+            }
+
+            else {
+                url += param + '=' + search[param];
+            }
+
+        }
+        return url;
+    };
+
+    $scope.updateURL = function() {
+        $rootScope.allowRefresh = false;
+        var search = $scope.createParams($scope.search);
+        $location.url($state.href($state.current.name) + search);
+        Search.saveSearchFromModel($scope.search);
+    };
 
     $scope.setView = function(name) {
         if (name === 'list') {
-            var url = $state.href('search.list', $scope.params);
+            var url = $state.href('search.list', $scope.search);
             $location.url(url);
         }  else if (name === 'map') {
-            var url = $state.href('search.map', $scope.params);
+            var url = $state.href('search.map', $scope.search);
             $location.url(url);
         }
     };

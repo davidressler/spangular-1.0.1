@@ -346,9 +346,9 @@
         
         // Center property must be specified and provide lat & 
         // lng properties
-        if (!angular.isDefined(scope.center) || 
-            (!angular.isDefined(scope.center.latitude) || 
-                !angular.isDefined(scope.center.longitude))) {
+        if (!angular.isDefined(scope.center) ||
+            (!angular.isDefined(scope.center.lat) ||
+                !angular.isDefined(scope.center.lon))) {
         	
           $log.error("angular-google-maps: could not find a valid center property");          
           return;
@@ -370,7 +370,7 @@
         // Create our model
         var _m = new MapModel(angular.extend(opts, {
           container: element[0],            
-          center: new google.maps.LatLng(scope.center.latitude, scope.center.longitude),              
+          center: new google.maps.LatLng(scope.center.lat, scope.center.lon),
           draggable: attrs.draggable == "true",
           zoom: scope.zoom
         }));
@@ -382,8 +382,8 @@
           $timeout(function () {
             
             scope.$apply(function (s) {
-              scope.center.latitude = c.lat();
-              scope.center.longitude = c.lng();
+              scope.center.lat = c.lat();
+              scope.center.lon = c.lng();
             });
 
           if (scope.events.hasOwnProperty('drag') && angular.isFunction(scope.events['drag'])) {
@@ -419,8 +419,8 @@
             scope.$apply(function (s) {
               
               if (!_m.dragging) {
-                scope.center.latitude = c.lat();
-                scope.center.longitude = c.lng();
+                scope.center.lat = c.lat();
+                scope.center.lon = c.lng();
               }
             });
           });
@@ -574,8 +574,8 @@
           }
           
           if (!_m.dragging) {
-            _m.center = new google.maps.LatLng(newValue.latitude, 
-                newValue.longitude);          
+            _m.center = new google.maps.LatLng(newValue.lat,
+                newValue.lon);
             _m.draw();
           }
         }, true);

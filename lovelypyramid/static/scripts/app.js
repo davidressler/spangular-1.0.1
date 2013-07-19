@@ -1,16 +1,17 @@
 'use strict';
 
-//function colorConsole(msg, color, size) {
-//	console.log("%c" + msg, "color:" + color + ";font-size:" + size + ";");
-//}
+function colorConsole(msg, color, size) {
+	console.log("%c" + msg, "color:" + color + ";font-size:" + size + ";");
+}
 
-var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'Search-State-Mgr', 'ngCookies']);
+var app = angular.module('spangularApp', ['ui.state', "google-maps", 'Search-Module', 'listings', 'ngCookies']);
 
-app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, SearchStateMgr){
+app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, $log){
 	$rootScope.$state = $state;
 	$rootScope.$stateParams = $stateParams;
     $rootScope.Search = Search;
     $rootScope.allowRefresh = true;
+
     $rootScope.$on('$stateChangeStart', function(ev) {
         if(!$rootScope.allowRefresh){
 	        ev.preventDefault();
@@ -21,13 +22,12 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
 
 	$rootScope.$on('$stateChangeSuccess', function(ev){
         if ($state.includes('search.map') || $state.includes('search.list')) {
-            SearchStateMgr.URLUpdated($stateParams);
+            $timeout(function() {
+                $log.error('broadcasting shits everywhere');
+                Search.saveSearchFromURL($stateParams);
+            });
         }
 	});
-
-    $rootScope.returnedServerSearch = function(search) {
-        SearchStateMgr.factoryModelUpdated(search);
-    }
 });
 
 
@@ -99,7 +99,6 @@ app.directive('filter', function($stateParams) {
     return {
         restrict: 'EA',
         templateUrl: '/static/views/search-filter.html',
-        scope: {},
 	    transclude: true,
 	    controller: 'SearchCtrl',
         link: function(scope, element, attrs) {
