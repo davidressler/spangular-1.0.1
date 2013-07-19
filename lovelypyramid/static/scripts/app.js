@@ -17,7 +17,6 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
 	        ev.preventDefault();
             $rootScope.allowRefresh = true;
         }
-
     });
 
 	$rootScope.$on('$stateChangeSuccess', function(ev){

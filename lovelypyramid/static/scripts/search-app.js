@@ -127,7 +127,9 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $q, $lo
 
         if (search != null) {
             var deferred = $q.defer();
-            deferred.resolve(formatReturnedSearch(search));
+            $timeout(function() {
+                deferred.resolve(formatReturnedSearch(search));
+            });
             return deferred.promise;
         } else {
             var promise = $http.get('/get/search').then(function (data) {
@@ -197,7 +199,7 @@ searchModule.factory('Search', function($http, $rootScope, $cookieStore, $q, $lo
     }
 });
 
-searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, Listings, $state, $location, $log) {
+searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, Listings, $state, $location, $log, $timeout) {
 
     $scope.search = {
         zoom: 2,
@@ -227,7 +229,7 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, Listi
 //                }
             },
             idle: function (mapModel) {
-                $scope.updateURL();
+                    $scope.updateURL();
             },
 	        dragstart: function(mapModel) {
 
@@ -296,18 +298,19 @@ searchModule.controller('SearchCtrl', function($rootScope, $scope, Search, Listi
     };
 
     $scope.updateURL = function() {
-        $rootScope.allowRefresh = false;
         var search = $scope.createParams($scope.search);
+        $rootScope.allowRefresh = false;
         $location.url($state.href($state.current.name) + search);
         Search.saveSearchFromModel($scope.search);
     };
 
     $scope.setView = function(name) {
         if (name === 'list') {
-            var url = $state.href('search.list', $scope.search);
+            $rootScope.allowRefresh = true;
+            var url = $state.href('search.list') + $scope.createParams($scope.search);
             $location.url(url);
         }  else if (name === 'map') {
-            var url = $state.href('search.map', $scope.search);
+            var url = $state.href('search.map') + $scope.createParams($scope.search);
             $location.url(url);
         }
     };
@@ -318,19 +321,19 @@ searchModule.filter('searchFilter', function() {
 
     return function(input, params) {
         var result = [];
-        if ('beds' in params) {
-            for (var bed in params.beds) {
-                for (var i in input) {
-                    if (input[i].Beds === params.beds[bed]) {
-                        result.push(input[i]);
-                    }
-                }
-            }
-        } else {
+//        if ('beds' in params) {
+//            for (var bed in params.beds) {
+//                for (var i in input) {
+//                    if (input[i].Beds === params.beds[bed]) {
+//                        result.push(input[i]);
+//                    }
+//                }
+//            }
+//        } else {
             for (var i in input) {
                 result.push(input[i]);
             }
-        }
+//        }
         console.log('RESULT LENGTH: ', result.length);
         return result;
     };

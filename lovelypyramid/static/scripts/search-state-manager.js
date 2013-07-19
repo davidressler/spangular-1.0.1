@@ -33,14 +33,14 @@ searchStateManager.factory('SearchStateMgr', function($rootScope, $location, $st
 
     // Private
     //////////////
-    var updateUrl = function (replaceHistory) {
-        $rootScope.allowRefresh = false;
-        if (replaceHistory) {
-            $location.url($state.href($state.current.name, searchObj)).replace();
-        } else {
-            $location.url($state.href($state.current.name, searchObj));
-        }
-    };
+//    var updateUrl = function (replaceHistory) {
+//        $rootScope.allowRefresh = false;
+//        if (replaceHistory) {
+//            $location.url($state.href($state.current.name, searchObj)).replace();
+//        } else {
+//            $location.url($state.href($state.current.name, searchObj));
+//        }
+//    };
 
     var updateFactoryModel = function () {
         console.log('SAVING SEARCH FROM FACTORY')
