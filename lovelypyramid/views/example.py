@@ -38,9 +38,7 @@ def search(request):
 
 	result = {}
 	result['beds'] = [2]
-	result['center'] = {}
-	result['center']['lat'] = 33
-	result['center']['lon'] = -122
+	result['center'] = ['33.0234', '-122.0400']
 	result['zoom'] = 15
 	#result['failed'] = True
 

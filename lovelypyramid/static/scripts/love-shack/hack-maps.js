@@ -128,7 +128,7 @@
           google.maps.event.addListener(_instance, "center_changed",
               
               function () {
-                that.center = _instance.getCenter();
+                  that.center = _instance.getCenter();
               }
           );
           
@@ -347,8 +347,8 @@
         // Center property must be specified and provide lat & 
         // lng properties
         if (!angular.isDefined(scope.center) ||
-            (!angular.isDefined(scope.center.lat) ||
-                !angular.isDefined(scope.center.lon))) {
+            (!angular.isDefined(scope.center[0]) ||
+                !angular.isDefined(scope.center[1]))) {
         	
           $log.error("angular-google-maps: could not find a valid center property");          
           return;
@@ -370,7 +370,7 @@
         // Create our model
         var _m = new MapModel(angular.extend(opts, {
           container: element[0],            
-          center: new google.maps.LatLng(scope.center.lat, scope.center.lon),
+          center: new google.maps.LatLng(scope.center[0], scope.center[1]),
           draggable: attrs.draggable == "true",
           zoom: scope.zoom
         }));
@@ -382,8 +382,8 @@
           $timeout(function () {
             
             scope.$apply(function (s) {
-              scope.center.lat = c.lat();
-              scope.center.lon = c.lng();
+              scope.center[0] = c.lat();
+              scope.center[1] = c.lng();
             });
 
           if (scope.events.hasOwnProperty('drag') && angular.isFunction(scope.events['drag'])) {
@@ -419,8 +419,8 @@
             scope.$apply(function (s) {
               
               if (!_m.dragging) {
-                scope.center.lat = c.lat();
-                scope.center.lon = c.lng();
+                scope.center[0] = c.lat();
+                scope.center[1] = c.lng();
               }
             });
           });
@@ -574,8 +574,8 @@
           }
           
           if (!_m.dragging) {
-            _m.center = new google.maps.LatLng(newValue.lat,
-                newValue.lon);
+            _m.center = new google.maps.LatLng(newValue[0],
+                newValue[1]);
             _m.draw();
           }
         }, true);

@@ -21,10 +21,10 @@ app.run(function($rootScope, $state, $stateParams, $location, $timeout, Search, 
 
 	$rootScope.$on('$stateChangeSuccess', function(ev){
         if ($state.includes('search.map') || $state.includes('search.list')) {
-            $timeout(function() {
+//            $timeout(function() {
                 $log.error('broadcasting shits everywhere');
                 Search.saveSearchFromURL($stateParams);
-            });
+//            });
         }
 	});
 });
